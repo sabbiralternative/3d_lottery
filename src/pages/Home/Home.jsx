@@ -7,12 +7,14 @@ import Quick3DContainer from "./Quick3DContainer";
 import SingleDigit from "./SingleDigit";
 import TripleDigit from "./TripleDigit";
 import MinuteTab from "./MinuteTab";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const [minuteTab, setMinuteTab] = useState(1.5);
   const [counter, setCounter] = useState(1.5 * 60);
   const [translate, setTranslate] = useState(1);
   const [formatTime, setFormatTime] = useState({ minute: 0, second: 0 });
+  const { token } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (counter > 0) {
@@ -43,8 +45,8 @@ const Home = () => {
       setFormatTime({ minute: formattedMins, second: formattedSecs });
     }
   }, [counter]);
-
-  return (
+  const errorMessage = sessionStorage.getItem("errorMessage");
+  return token ? (
     <div className="game-container">
       <Navbar />
       <div className="game-info">
@@ -83,6 +85,20 @@ const Home = () => {
         <BetList />
       </div>
       <BottomCartWrapper />
+    </div>
+  ) : (
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <div className="alert alert-danger text-center m-0 " role="alert">
+        {errorMessage ||
+          "URL parameters are missing or invalid. Key: token | Value"}
+      </div>
     </div>
   );
 };
