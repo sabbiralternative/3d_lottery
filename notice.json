@@ -7,7 +7,7 @@
     "settings": {
       "siteTitle": "3D Lottery",
       "disabledDevtool": false,
-      "baseUrl": "/3d_lottery",
+      "baseUrl": "",
       "lobby": "https://aura365.io"
     },
 
